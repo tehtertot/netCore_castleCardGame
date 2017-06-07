@@ -10,6 +10,8 @@ namespace castle
             Console.WriteLine($"{p.name}, your turn! Ready? Press any key(s) to continue! And enter!");
             Console.ReadLine();
             showBoard(pot, deck); //display the cards in the pot
+            Console.WriteLine($"You have {p.castle.Count} cards in your castle.");
+            Console.WriteLine();
             if (skip) {
                 takePot(pot, p);
                 p.sortHand();
@@ -108,13 +110,13 @@ namespace castle
                 cardIndex = 3;
             }
             foreach (Card c in cards) {
-                    Console.WriteLine(cardIndex + " - " + c.ToString() + " ");
-                    cardIndex++;
-                    if(c.val >= topVal || c.val == 3 || c.val == 7 || c.val == 10 )
-                    {
-                        playable = true;
-                    }
+                Console.WriteLine(cardIndex + " - " + c.ToString() + " ");
+                cardIndex++;
+                if(c.val >= topVal || c.val == 3 || c.val == 7 || c.val == 10 )
+                {
+                    playable = true;
                 }
+            }
             return playable;
         }//end isPlayable()
         public static bool playFromHand(Player p, int topVal, List<Card> pot) {
@@ -177,7 +179,10 @@ namespace castle
         public static bool playInvisibleCastle(Player p, int topVal, List<Card> pot) {
             //fix playing special cards from hand, discarding
             bool skip = false;
-            Console.WriteLine($"Pick a card from your hidden castle....ooOooOooOOh. Pick from 0 to {p.castle.Count-1}");
+            Console.WriteLine($"Pick a card from your hidden castle....ooOooOooOOh.");
+            for (int i = 0; i < p.castle.Count; i++) {
+                Console.WriteLine($"{i} - ???");
+            }
             int r = playSelection(p.castle.Count);
             List<Card> invisibleSelection = new List<Card>(){p.castle[r]};
             if (isPlayable(invisibleSelection,topVal,true)) {
@@ -187,7 +192,7 @@ namespace castle
             }
             else {
                 Console.WriteLine($"You tried to play a {p.castle[r].ToString()} with your invisible hand.");
-                System.Console.WriteLine("Oops! That card didn't work.");
+                System.Console.WriteLine("Oops! That card didn't work. Taking the pot...");
                 p.hand.Add(p.castle[r]);
                 p.castle.RemoveAt(r);
                 takePot(pot, p);

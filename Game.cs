@@ -71,6 +71,7 @@ namespace castle
                 Console.WriteLine($"{players[(t + 1) % players.Count].name}, press enter when ready.");
                 Console.ReadLine();
                 t++;
+                // deck.cards.Clear();
             }
         }//end initializeHands()
 
@@ -82,6 +83,7 @@ namespace castle
                 Player p = players[playCount % players.Count];
                 skipNext = Turn.playTurn(p, thePot, deck, skipNext);
                 if (p.hand.Count == 0 && p.castle.Count == 0) {
+                    Console.WriteLine(p.name + " is the winner!");
                     Splash.Finish();
                     gameInPlay = false;
                 }
