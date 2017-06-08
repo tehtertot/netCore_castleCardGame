@@ -71,7 +71,7 @@ namespace castle
                 Console.WriteLine($"{players[(t + 1) % players.Count].name}, press enter when ready.");
                 Console.ReadLine();
                 t++;
-                // deck.cards.Clear();
+                deck.cards.Clear();
             }
         }//end initializeHands()
 
